@@ -25,8 +25,8 @@ jobs:
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
-        # with:
-        #   path: "dist/gh-pages-workflow/"
+        with:
+          path: build
    
    deploy:
     environment:
