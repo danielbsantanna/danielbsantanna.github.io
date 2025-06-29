@@ -21,12 +21,12 @@ jobs:
         run: npm install
 
       - name: 🛠️ Build React app
-        run: npm run build -- --base-href /gh-pages-workflow/
+        run: npm run build 
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
-        with:
-          path: "dist/gh-pages-workflow/"
+        # with:
+        #   path: "dist/gh-pages-workflow/"
    
    deploy:
     environment:
