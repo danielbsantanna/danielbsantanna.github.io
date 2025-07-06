@@ -3,6 +3,7 @@ import {
     Card, CardContent, Typography, Button, Stack, LinearProgress
 } from '@mui/material';
 import questions from '../Data/Questions';
+import profileDescriptions from '../Data/ProfileDescriptions';
 import { PieChart } from '@mui/x-charts/PieChart';
 
 const Disc = () => {
@@ -15,7 +16,9 @@ const Disc = () => {
     });
     const [finished, setFinished] = useState(false);
     const formattedScore = Object.values(score);
-
+    const sorted = Object.entries(score)
+        .map(([key, data]) => ({ key, ...data }))
+        .sort((a, b) => b.value - a.value);
 
     const handleAnswer = (category) => {
         setScore(prev => ({
@@ -32,23 +35,56 @@ const Disc = () => {
         }
     };
 
-    const getTopCategory = () => {
-        const sorted = Object.entries(score)
-            .map(([key, data]) => ({ key, ...data }))
-            .sort((a, b) => b.value - a.value);
-            console.log(sorted)
-        return sorted[0].label
-    }
-
     if (finished) {
         return (
-            <Card>
-                <CardContent>
-                    <Typography variant="h5">Parabéns, seu tipo de perfil é:</Typography>
+            <Card
+                sx={{
+                    width: {
+                        xs: '100vw',
+                        md: '60%',
+                    },
+                    height: {
+                        xs: '100vh',
+                        md: '60%',
+                    },
+                    display: 'flex',
+                    flexDirection: 'column',
+                }}>
+                <CardContent sx={{
+                    flexGrow: 1,
+                    overflowY: 'auto',
+                    padding: 2,
+                }}>
+                    <Typography variant="h5">Parabéns, você concluíu o teste, veja a baixo as informações sobre o seu perfil</Typography>
                     <Typography variant="h4" color="primary" mt={2}>
-                        {getTopCategory()}
+                        {sorted[0].label}
                     </Typography>
                     <PieChart series={[{ data: formattedScore }]} width={400} height={300} />
+
+                    <Typography variant="h6" gutterBottom align='left'>
+                        {sorted[0].label}
+                    </Typography>
+                    <Typography variant="body1" gutterBottom align='justify'>
+                        {profileDescriptions[sorted[0].key][0]}
+                    </Typography>
+                    <Typography variant="h6" gutterBottom align='left'>
+                        {sorted[1].label}
+                    </Typography>
+                    <Typography variant="body1" gutterBottom align='justify'>
+                        {profileDescriptions[sorted[1].key][1]}
+                    </Typography>
+                    <Typography variant="h6" gutterBottom align='left'>
+                        {sorted[2].label}
+                    </Typography>
+                    <Typography variant="body1" gutterBottom align='justify'>
+                        {profileDescriptions[sorted[2].key][2]}
+                    </Typography>
+                    <Typography variant="h6" gutterBottom align='left'>
+                        {sorted[3].label}
+                    </Typography>
+                    <Typography variant="body1" gutterBottom align='justify'>
+                        {profileDescriptions[sorted[3].key][3]}
+                    </Typography>
                 </CardContent>
             </Card>
         );
@@ -58,8 +94,24 @@ const Disc = () => {
     const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
 
     return (
-        <Card>
-            <CardContent>
+        <Card sx={{
+            width: {
+                xs: '100vw',
+                md: '60%',
+            },
+            height: {
+                xs: '100vh',
+                md: '60%',
+            },
+            display: 'flex',
+            flexDirection: 'column',
+        }}>
+            <CardContent sx={{
+                flexGrow: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+            }}>
                 <Typography variant="h6" gutterBottom>
                     Pergunta {current + 1} de {questions.length}
                 </Typography>
